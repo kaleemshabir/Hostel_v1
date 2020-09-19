@@ -1,4 +1,6 @@
 const mongoose = require('mongoose');
+const slugify = require('slugify');
+const geocoder = require('../utils/geocoder');
 
 const HostelSchema = new mongoose.Schema({
   name: {
@@ -54,10 +56,8 @@ const HostelSchema = new mongoose.Schema({
     min: [1, 'Rating must be atleat 1'],
     max: [10, 'Rating must can not be more than 10'],
   },
-  photo: {
-    type: String,
-    default: 'no-photo.jpg',
-  },
+  photo: String,
+
   mess: {
     type: String,
     default: true,
@@ -90,6 +90,43 @@ const HostelSchema = new mongoose.Schema({
     type: Date,
     default: Date.now,
   },
+
+  user: {
+    type: mongoose.Schema.ObjectId,
+    ref: 'User',
+    required: true,
+  },
+});
+
+// Create hostel slug from the name
+HostelSchema.pre('save', function (next) {
+  this.slug = slugify(this.name, { lower: true });
+  // console.log(`Slugify ran `, this.slug);
+  next();
+});
+
+// Geocode & create location field
+
+HostelSchema.pre('save', async function (next) {
+  const loc = await geocoder.geocode(this.address);
+  this.location = {
+    type: 'Point',
+    coordinates: [loc[0].longitude, loc[0].latitude],
+    formattedAddress: loc[0].formattedAddress,
+    street: loc[0].streetName,
+    city: loc[0].city,
+    zipcode: loc[0].zipcode,
+    country: loc[0].country,
+  };
+  // Do not save address in DB
+  this.address = undefined;
+
+  next();
+});
+
+// Cascade delete courses when a hostel is deleted
+HostelSchema.pre('remove', async function (next) {
+  await this.model('Room').deleteMany({ hostel: this._id });
 });
 
 module.exports = mongoose.model('Hostel', HostelSchema);
