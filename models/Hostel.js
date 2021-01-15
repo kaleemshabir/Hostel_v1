@@ -69,7 +69,7 @@ photo: String,
 hostelType: {
 type: String,
 required: [true, 'Please add Hostel type i.e Male hostel or Female hostel'],
-enum: ['maleHostel', 'femaleHostel'],
+
 },
 // guestEntrance: {
 // type: Boolean,
