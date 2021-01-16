@@ -32,6 +32,25 @@ address: {
 type: String,
 required: [true, 'Please add an address'],
 },
+longitude: {
+type: String,
+required: [true, 'Please add an corrdinates'],
+},
+latitude: {
+type: String,
+required: [true, 'Please add an corrdinates'],
+},
+town: {
+type: String,
+required: [true, 'Plz add an town'],
+},
+city: {
+type: String,
+required: [true, 'Please add an city'],
+},
+
+
+
 // location: {
 // // GeoJSON Point
 // type: {
