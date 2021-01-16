@@ -23,6 +23,10 @@ const RoomSchema = new mongoose.Schema({
     required: [true, 'Please add no of seats in a rooms'],
   },
   
+  availableSeats: {
+    type: String,
+  },
+  
   price: {
     type: String,
     required: [true, 'Please add price per seat'],
