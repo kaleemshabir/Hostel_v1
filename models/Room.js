@@ -2,8 +2,8 @@ const mongoose = require('mongoose');
 
 const RoomSchema = new mongoose.Schema({
   img: {
-    data: Buffer,
-    contentType: String,
+    type: Array,
+    default:[]
   },
   roomNumber: {
     type: Number,
@@ -16,6 +16,16 @@ const RoomSchema = new mongoose.Schema({
   floor: {
     type: String,
     required: [true, 'Please add flour of room'],
+  },
+  
+  seater: {
+    type: String,
+    required: [true, 'Please add no of seats in a rooms'],
+  },
+  
+  price: {
+    type: String,
+    required: [true, 'Please add price per seat'],
   },
 
   ac: {
