@@ -24,8 +24,8 @@ const rooms = require('./routes/rooms');
 const auth = require('./routes/auth');
 const users = require('./routes/users');
 const reviews = require('./routes/reviews');
-
 const shops = require('./routes/shops');
+
 //app.use(bodyParser.urlencoded({ extended: false }));
 
 // Body parser

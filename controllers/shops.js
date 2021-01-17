@@ -9,9 +9,9 @@ const Shop = require('../models/Shop');
 // @desc        Get all hostels
 // @route       GET /api/v1/hostels
 // @access      Public
-// exports.getHostels = asyncHandler(async (req, res, next) => {
-//   res.status(200).json(res.advancedResults);
-// });
+exports.getShops = asyncHandler(async (req, res, next) => {
+  res.status(200).json(res.advancedResults);
+});
 
 // @desc        Get single hostel
 // @route       GET /api/v1/hostels/:id
@@ -58,83 +58,106 @@ exports.createShop = asyncHandler(async (req, res, next) => {
 // @desc        Update hostel
 // @route       POST /api/v1/hostels/:id
 // @access      Private
-// exports.updateHostel = asyncHandler(async (req, res, next) => {
-//   let hostel = await Hostel.findById(req.params.id);
-//   if (!hostel) {
-//     return next(
-//       new ErrorResponse(`Hostel not found with id of ${req.params.id}`, 404)
-//     );
-//   }
+exports.updateShop = asyncHandler(async (req, res, next) => {
+  let shop = await Shop.findById(req.params.id);
+  if (!shop) {
+    return next(
+      new ErrorResponse(`Shop not found with id of ${req.params.id}`, 404)
+    );
+  }
 
-//   // Make sure user is hostel owner
-//   if (hostel.user.toString() !== req.user.id && req.user.role !== 'admin') {
-//     next(
-//       new ErrorResponse(
-//         `User ${req.params.id} is not authorized to update this hostel`,
-//         401
-//       )
-//     );
-//   }
+  // Make sure user is hostel owner
+  if (hostel.user.toString() !== req.user.id && req.user.role !== 'admin') {
+    next(
+      new ErrorResponse(
+        `User ${req.params.id} is not authorized to update this shop`,
+        401
+      )
+    );
+  }
 
-//   hostel = await Hostel.findByIdAndUpdate(req.params.id, req.body, {
-//     new: true,
-//     runValidators: true,
-//   });
+  hostel = await Hostel.findByIdAndUpdate(req.params.id, req.body, {
+    new: true,
+    runValidators: true,
+  });
 
-//   res.status(200).json({ success: true, data: hostel });
-// });
+  res.status(200).json({ success: true, data: hostel });
+});
+
+exports.orderItems = asyncHandler(async(req, res, next) => {
+  //req.body.user = req.user.id;
+  const ordersBy = {
+    orderedBy: req.user.id,
+    items: req.body.items
+  }
+  let shop = await Shop.findById(req.params.id);
+  if(!shop) {
+   return res.status(400).json({success:false, message:"shop not found"});
+  }
+
+   shop = await Shop.findByIdAndUpdate(req.params.id, {
+     $push: {orders:ordersBy }
+   }, {new: true} );
+
+  res.status(201).json({
+    success: true,
+    data: shop,
+  });
+})
 
 // // @desc        Delete hostel
 // // @route       POST /api/v1/hostels/:id
 // // @access      Private
-// exports.deleteHostel = asyncHandler(async (req, res, next) => {
-//   const hostel = await Hostel.findById(req.params.id);
-//   if (!hostel) {
-//     return next(
-//       new ErrorResponse(`Hostel not found with id of ${req.params.id}`, 404)
-//     );
-//   }
+exports.deleteShop = asyncHandler(async (req, res, next) => {
+  const shop = await Shop.findById(req.params.id);
+  if (!shop) {
+    return next(
+      new ErrorResponse(`Shop not found with id of ${req.params.id}`, 404)
+    );
+  }
 
-//   // Make sure the user is hostel owner
-//   if (hostel.user.toString() !== req.user.id && req.user.role !== 'admin') {
-//     return next(
-//       new ErrorResponse(
-//         `User ${req.params.id} is not authorized to delete this hostel`,
-//         401
-//       )
-//     );
-//   }
-//   hostel.remove();
+  // Make sure the user is shop owner
+  if (shop.user.toString() !== req.user.id && req.user.role !== 'admin') {
+    return next(
+      new ErrorResponse(
+        `User ${req.params.id} is not authorized to delete this shop`,
+        401
+      )
+    );
+  }
+  hostel.remove();
 
-//   res.status(200).json({ success: true, data: {} });
-// });
+  res.status(200).json({ success: true, data: {} });
+});
 
-// // @desc        Get hostels within radius
-// // @route       GET /api/v1/hostels/radius/:zipcode/:distance
-// // @access      Public
-// exports.getHostelInRadius = asyncHandler(async (req, res, next) => {
-//   const { zipcode, distance } = req.params;
+// @desc        Get hostels within radius
+// @route       GET /api/v1/hostels/radius/:zipcode/:distance
+// @access      Public
+exports.getShopInRadius = asyncHandler(async (req, res, next) => {
+  const { distance,latitude,longitude } = req.body;
 
-//   // Get lat/lng from geocoder
-//   const loc = await geocoder.geocode(zipcode);
-//   const lat = loc[0].latitude;
-//   const lng = loc[0].longitude;
+  // Get lat/lng from geocoder
+  // const loc = await geocoder.geocode(zipcode);
+  // const lat = loc[0].latitude;
+  // const lng = loc[0].longitude;
+  const lat = latitude;
+  const lng = longitude;
 
-//   // Calc radius using radians
-//   // Divide distance by radius of earth
-//   // Earth Radius = 3,963 mi / 6,378 km
-//   const radius = distance / 3963;
+  // Calc radius using radians
+  // Divide distance by radius of earth
+  // Earth Radius = 3,963 mi / 6,378 km
+  const radius = distance / 3963;
 
-//   const hostels = await Hostel.find({
-//     location: { $geoWithin: { $centerSphere: [[lng, lat], radius] } },
-//   });
+  const shops = await Shop.find({
+    location: { $geoWithin: { $centerSphere: [[lng, lat], radius] } },
+  });
 
-//   res.status(200).json({
-//     success: true,
-//     count: hostels.length,
-//     data: hostels,
-//   });
-// });
+  res.status(200).json({
+    success: true,
+    count: shops.length,
+    data: shops,
+  });
+});
 
 // // @desc        Upload photo for hostel
 // // @route       PUT /api/v1/hostels/:id/photo

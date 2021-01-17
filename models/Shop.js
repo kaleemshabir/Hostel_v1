@@ -25,6 +25,19 @@ const ShopSchema = new mongoose.Schema({
     type: Array,
     default:[]
   },
+  orders: [
+    {
+      orderedBy: {
+        type: mongoose.Schema.ObjectId,
+        ref: 'User',
+        required: true,
+      },
+      items: {
+        type: Array,
+        default: true
+      }
+    }
+  ],
  
   longitude: String,
   latitude: String,

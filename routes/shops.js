@@ -3,11 +3,11 @@ var multer = require('multer');
 const {
   createShop,
   getShop,
+  orderItems,
   getShops,
   updateShop,
   deleteShop,
-  uploadItems,
-  orderItems
+getShopInRadius
 } = require('../controllers/shops');
 
 const Hostel = require('../models/Shop');
@@ -20,15 +20,18 @@ const reviewsRouter = require('./reviews');
 const router = express.Router();
 
 const { protect, authorize } = require('../middleware/auth');
+const Shop = require('../models/Shop');
+router.route('/:id/order-item').post(protect, orderItems);
 
 router
   .route('/')
+  .get(advancedResults(Shop), getShops)
   .post(protect, authorize('publisher', 'admin'), createShop);
 router
   .route('/:id')
   .get(getShop)
-  // .put(protect, authorize('publisher', 'admin'), updateShop)
-  // .delete(protect, authorize('publisher', 'admin'), deleteShop);
+  .put(protect, authorize('publisher', 'admin'), updateShop)
+  .delete(protect, authorize('publisher', 'admin'), deleteShop);
 // router.put(
 //   '/:id/photo',
 //   protect,
@@ -37,6 +40,6 @@ router
 //   hostelPhotoUpload
 // );
 
-// router.route('/radius/:zipcode/:distance').get(getHostelInRadius);
+router.route('/radius').get(getShopInRadius);
 
 module.exports = router;

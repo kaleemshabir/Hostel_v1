@@ -39,9 +39,10 @@ const { protect, authorize } = require('../middleware/auth');
 router.use('/:hostelId/rooms', roomRouter);
 router.use('/:hostelId/reviews', reviewsRouter);
 
+router.route('/search')
+.post(advancedResults(Hostel, 'rooms'), getHostels)
 router
   .route('/')
-  .get(advancedResults(Hostel, 'rooms'), getHostels)
   .post(protect, authorize('publisher', 'admin'), createHostel);
 router
   .route('/:id')

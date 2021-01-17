@@ -8,7 +8,7 @@ const ReviewSchema = new mongoose.Schema({
   rating: {
     type: Number,
     min: 1,
-    max: 10,
+    max: 5,
     required: [true, 'Please add a rating between 1 and 10'],
   },
   createdAt: {
@@ -45,7 +45,7 @@ ReviewSchema.statics.getAverageRating = async function (hostelId) {
   ]);
 
   try {
-    await this.model('Hostel').findByIdAndUpdate(bootcampId, {
+    await this.model('Hostel').findByIdAndUpdate(hostelId, {
       averageRating: obj[0].averageRating,
     });
   } catch (err) {
