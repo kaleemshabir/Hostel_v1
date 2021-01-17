@@ -74,7 +74,9 @@ const sendTokenResponse = (user, statusCode, res) => {
 // @access      Private
 exports.getMe = asyncHandler(async (req, res, next) => {
   const user = await User.findById(req.user.id);
-  res.status(200).json({ success: true, data: user });
+const hostel = await Hostel.findOne({user: req.user.id});
+ 
+  res.status(200).json({ success: true, data: {user,hostel});
 });
 
 // @desc        Update user details
