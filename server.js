@@ -25,6 +25,7 @@ const auth = require('./routes/auth');
 const users = require('./routes/users');
 const reviews = require('./routes/reviews');
 
+const shops = require('./routes/shops');
 //app.use(bodyParser.urlencoded({ extended: false }));
 
 // Body parser
@@ -42,6 +43,7 @@ app.use('/api/v1/rooms', rooms);
 app.use('/api/v1/auth', auth);
 app.use('/api/v1/users', users);
 app.use('/api/v1/reviews', reviews);
+app.use('/api/v1/shops', shops);
 
 app.use(errorHandler);
 

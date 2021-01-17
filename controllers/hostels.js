@@ -38,7 +38,7 @@ exports.getHostel = asyncHandler(async (req, res, next) => {
 exports.createHostel = asyncHandler(async (req, res, next) => {
   // Add user to req.body
   req.body.user = req.user.id;
-
+//jlldfskjfkljsdkljflksdjfklljdfldsjlfjlsd
   // Check for published hostel
   const publishedHostel = await Hostel.findOne({ user: req.body.user });
 
@@ -165,6 +165,7 @@ exports.hostelPhotoUpload = asyncHandler(async (req, res, next) => {
   cloudinary.uploader.upload(req.file.path, async function (result) {
     // add cloudinary url for the image to the campground object under image property
     req.body.photo = result.secure_url;
+    console.log(result.secure_url);
     //console.log(req.body.photo);
     const hostel = await Hostel.findByIdAndUpdate(req.params.id, req.body);
 
