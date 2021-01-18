@@ -2,6 +2,7 @@ const Hostel = require('../models/Hostel');
 const asyncHandler = require('../middleware/async');
 const ErrorResponse = require('../utils/errorResponse');
 const User = require('../models/User');
+const Shop = require('../models/Shop');
 
 // @desc        Register user
 // @route       POST /api/v1/auth/register
@@ -75,7 +76,8 @@ const sendTokenResponse = (user, statusCode, res) => {
 exports.getMe = asyncHandler(async (req, res, next) => {
   const user = await User.findById(req.user.id);
    const hostel = await Hostel.findOne({user: req.user.id});
-  res.status(200).json({ success: true, data:{ user, hostel}} );
+   const shop = await Shop.findOne({user: req.user.id});
+  res.status(200).json({ success: true, data:{ user, hostel, shop}} );
 });
 
 // @desc        Update user details

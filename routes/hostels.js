@@ -11,7 +11,6 @@ const {
 } = require('../controllers/hostels');
 
 const Hostel = require('../models/Hostel');
-const advancedResults = require('../middleware/advancedResults');
 
 // Include other resource routers
 const roomRouter = require('./rooms');
@@ -40,7 +39,7 @@ router.use('/:hostelId/rooms', roomRouter);
 router.use('/:hostelId/reviews', reviewsRouter);
 
 router.route('/search')
-.post(advancedResults(Hostel, 'rooms'), getHostels)
+.post( getHostels)
 router
   .route('/')
   .post(protect, authorize('publisher', 'admin'), createHostel);

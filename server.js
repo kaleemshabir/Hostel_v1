@@ -25,6 +25,7 @@ const auth = require('./routes/auth');
 const users = require('./routes/users');
 const reviews = require('./routes/reviews');
 const shops = require('./routes/shops');
+const products = require('./routes/products');
 
 //app.use(bodyParser.urlencoded({ extended: false }));
 
@@ -44,6 +45,7 @@ app.use('/api/v1/auth', auth);
 app.use('/api/v1/users', users);
 app.use('/api/v1/reviews', reviews);
 app.use('/api/v1/shops', shops);
+app.use('/api/v1/products', products);
 
 app.use(errorHandler);
 

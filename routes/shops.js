@@ -7,31 +7,37 @@ const {
   getShops,
   updateShop,
   deleteShop,
-getShopInRadius
+getShopInRadius,
+getProducts
 } = require('../controllers/shops');
 
-const Hostel = require('../models/Shop');
+const Shop = require('../models/Shop');
 const advancedResults = require('../middleware/advancedResults');
 
 // Include other resource routers
-const roomRouter = require('./rooms');
-const reviewsRouter = require('./reviews');
+const productRouter = require('./products');
+
 
 const router = express.Router();
 
 const { protect, authorize } = require('../middleware/auth');
-const Shop = require('../models/Shop');
+router.use('/:shopId/products', productRouter);
 router.route('/:id/order-item').post(protect, orderItems);
-
+router.route('/search')
+.post( getShops);
 router
-  .route('/')
-  .get(advancedResults(Shop), getShops)
+  .route('/') 
+
   .post(protect, authorize('publisher', 'admin'), createShop);
 router
   .route('/:id')
   .get(getShop)
   .put(protect, authorize('publisher', 'admin'), updateShop)
   .delete(protect, authorize('publisher', 'admin'), deleteShop);
+
+  router.route("/products")
+  .get(getProducts);
+
 // router.put(
 //   '/:id/photo',
 //   protect,

@@ -1,5 +1,12 @@
+const Hostel = require("../models/Hostel");
+const Review = require("../models/Review");
+const Shop = require("../models/Shop");
+const Room = require("../models/Room");
+const Product = require("../models/Product");
+
 const advancedResults = (model, populate) => async (req, res, next) => {
-  // let query;
+   let query;
+  
 
   // // Copy req.query
   // const reqQuery = { ...req.query };
@@ -17,22 +24,39 @@ const advancedResults = (model, populate) => async (req, res, next) => {
   // queryStr = queryStr.replace(/\b(gt|gte|lt|lte|in)\b/g, match => `$${match}`);
   
   // Finding resource
+  
   const search = req.body.search;
   let copy=[];
-  console.log("search", search.toLowerCase());
-  hostels = await model.find();
-  hostels.forEach(element => {
-    if( element.name.toLowerCase().includes(search.toLowerCase()) ||
-    element.address.toLowerCase().includes(search.toLowerCase()) || 
-    element.hostelType.toLowerCase().includes(search.toLowerCase())){
-copy.push(element);
-    }
-     
-    console.log("name",element.name);
+  query = await model.find();
+  if(model === Hostel ) {
+    query.forEach(element => {
+      if( element.name.toLowerCase().includes(search.toLowerCase()) ||
+      element.address.toLowerCase().includes(search.toLowerCase()) || 
+      element.hostelType.toLowerCase().includes(search.toLowerCase())){
+        copy.push(element);
+        
+      }
+       
+      
+  
+    });
+  }else  if (model === Shop && search) {
+    query.forEach(element => {
+      if( element.name.toLowerCase().includes(search.toLowerCase()) ||
+      element.address.toLowerCase().includes(search.toLowerCase()) || 
+      element.description.toLowerCase().includes(search.toLowerCase())){
+        copy.push(element);
+        
+      }
+       
+      
+  
+    });
+  }
 
-  });
-
-
+if(copy.length > 0 ) {
+  query = copy;
+}
   // // Select Fields
   // if (req.query.select) {
   //   const fields = req.query.select.split(',').join(' ');
@@ -55,9 +79,10 @@ copy.push(element);
   // const total = await model.countDocuments();
 
   // query = query.skip(startIndex).limit(limit);
+  console.log(populate);
 
   // if (populate) {
-  //   query = query.populate(populate);
+  //   query = await query.populate(populate);
   // }
 
   // Executing query
@@ -82,8 +107,8 @@ copy.push(element);
 
   res.advancedResults = {
     success: true,
-    count: copy.length,
-    data: copy
+    count: query.length,
+    data: query
   };
 
   next();

@@ -14,7 +14,29 @@ cloudinary.config({
 // @route       GET /api/v1/hostels
 // @access      Public
 exports.getHostels = asyncHandler(async (req, res, next) => {
-  res.status(200).json(res.advancedResults);
+  let hostels = await Hostel.find().populate({
+    path: 'room'
+  });
+  const search = req.body.search;
+let copy=[];
+
+  hostels.forEach(element => {
+    if( element.name.toLowerCase().includes(search.toLowerCase()) ||
+    element.address.toLowerCase().includes(search.toLowerCase()) || 
+    element.hostelType.toLowerCase().includes(search.toLowerCase())){
+      copy.push(element);
+      
+    }
+
+    if(copy.length > 0 ) {
+      hostels = copy;
+    }
+  });
+  return res.status(200).json({
+    success: true,
+    count: hostels.length,
+    data: hostels,
+  });
 });
 
 // @desc        Get single hostel

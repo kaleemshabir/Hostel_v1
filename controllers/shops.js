@@ -10,7 +10,27 @@ const Shop = require('../models/Shop');
 // @route       GET /api/v1/hostels
 // @access      Public
 exports.getShops = asyncHandler(async (req, res, next) => {
-  res.status(200).json(res.advancedResults);
+  let shops = await Shop.find();
+  const search = req.body.search;
+let copy=[];
+
+  shops.forEach(element => {
+    if( element.name.toLowerCase().includes(search.toLowerCase()) ||
+    element.address.toLowerCase().includes(search.toLowerCase()) || 
+    element.description.toLowerCase().includes(search.toLowerCase())){
+      copy.push(element);
+      
+    }
+
+    if(copy.length > 0 ) {
+      shops = copy;
+    }
+  });
+  return res.status(200).json({
+    success: true,
+    count: shops.length,
+    data: shops,
+  });
 });
 
 // @desc        Get single hostel
@@ -60,6 +80,10 @@ exports.createShop = asyncHandler(async (req, res, next) => {
 // @access      Private
 exports.updateShop = asyncHandler(async (req, res, next) => {
   let shop = await Shop.findById(req.params.id);
+  const item = {
+    item: req.body,
+    shop: shop
+  }
   if (!shop) {
     return next(
       new ErrorResponse(`Shop not found with id of ${req.params.id}`, 404)
@@ -67,7 +91,7 @@ exports.updateShop = asyncHandler(async (req, res, next) => {
   }
 
   // Make sure user is hostel owner
-  if (hostel.user.toString() !== req.user.id && req.user.role !== 'admin') {
+  if (shop.user.toString() !== req.user.id && req.user.role !== 'admin') {
     next(
       new ErrorResponse(
         `User ${req.params.id} is not authorized to update this shop`,
@@ -76,12 +100,17 @@ exports.updateShop = asyncHandler(async (req, res, next) => {
     );
   }
 
-  hostel = await Hostel.findByIdAndUpdate(req.params.id, req.body, {
+  shop = await Shop.findByIdAndUpdate(req.params.id,{
+    $push: {
+      items: item,
+
+    }
+  }, {
     new: true,
     runValidators: true,
   });
 
-  res.status(200).json({ success: true, data: hostel });
+  res.status(200).json({ success: true, data: shop });
 });
 
 exports.orderItems = asyncHandler(async(req, res, next) => {
@@ -159,40 +188,11 @@ exports.getShopInRadius = asyncHandler(async (req, res, next) => {
   });
 });
 
-// // @desc        Upload photo for hostel
-// // @route       PUT /api/v1/hostels/:id/photo
-// // @access      Private
-// exports.hostelPhotoUpload = asyncHandler(async (req, res, next) => {
-//   const hostel = await Hostel.findById(req.params.id);
-
-//   if (!hostel) {
-//     return next(
-//       new ErrorResponse(`Hostel not found with id of ${req.params.id}`, 404)
-//     );
-//   }
-
-//   // Make sure user is hostel owner
-//   if (hostel.user.toString() !== req.user.id && req.user.role !== 'admin') {
-//     return next(
-//       new ErrorResponse(
-//         `User ${req.params.id} is not authorized to update this hostel`,
-//         401
-//       )
-//     );
-//   }
-
-//   cloudinary.uploader.upload(req.file.path, async function (result) {
-//     // add cloudinary url for the image to the campground object under image property
-//     req.body.photo = result.secure_url;
-//     console.log(result.secure_url);
-//     //console.log(req.body.photo);
-//     const hostel = await Hostel.findByIdAndUpdate(req.params.id, req.body);
-
-//     if (!hostel) {
-//       return res.status(400).json({ success: false });
-//     }
-
-//     // res.redirect('/users');
-//     res.status(200).json({ success: true, data: hostel });
-//   });
-// });
+exports.getProducts = asyncHandler(async(req, res, next) =>{
+  let products=[];
+  const shops = await Shop.find();
+  shops.forEach(shop => {
+    products.concat(shop.items);
+  });
+  return res.send({products, })
+} )
