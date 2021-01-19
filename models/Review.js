@@ -15,6 +15,10 @@ const ReviewSchema = new mongoose.Schema({
     type: Date,
     default: Date.now,
   },
+  title: {
+    type: String,
+  },
+  
   hostel: {
     type: mongoose.Schema.ObjectId,
     ref: 'Hostel',
@@ -25,6 +29,7 @@ const ReviewSchema = new mongoose.Schema({
     ref: 'User',
     required: true,
   },
+
 });
 
 // Prevent user from submitting more than one review per hostel
