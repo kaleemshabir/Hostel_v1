@@ -26,7 +26,11 @@ const UserSchema = new mongoose.Schema({
   photo: {
     type: String,
   },
+  number: {
+    type: String,
+  },
   
+   
   password: {
     type: String,
     required: [true, 'Please add a password'],
