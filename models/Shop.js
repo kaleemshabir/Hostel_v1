@@ -42,8 +42,7 @@ const ShopSchema = new mongoose.Schema({
   longitude: String,
   latitude: String,
   photo: String,
-  city: String,
-  town: String,
+  
   createdAt: {
     type: Date,
     default: Date.now,

@@ -24,6 +24,7 @@ const rooms = require('./routes/rooms');
 const auth = require('./routes/auth');
 const users = require('./routes/users');
 const reviews = require('./routes/reviews');
+const shopReviews = require('./routes/shopReview');
 const shops = require('./routes/shops');
 const products = require('./routes/products');
 
@@ -46,6 +47,7 @@ app.use('/api/v1/users', users);
 app.use('/api/v1/reviews', reviews);
 app.use('/api/v1/shops', shops);
 app.use('/api/v1/products', products);
+app.use('/api/v1/shop-review', shopReviews);
 
 app.use(errorHandler);
 

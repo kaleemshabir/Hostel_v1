@@ -4,7 +4,7 @@
     "roomNumber": 1,
     "description": "This course will provide you with all of the essentials to become a successful frontend web developer. You will learn to master HTML, CSS and front end JavaScript, along with tools like Git, VSCode and front end frameworks like Vue",
     "floor": 1,
-    "ac": true,
+    "seater": 4,
     "tv": true,
     "hostel": "5d713995b721c3bb38c1f5d0",
     "user": "5d7a514b5d2c12c7449be045"
@@ -14,9 +14,9 @@
     "roomNumber": 2,
     "description": "In this course you will learn full stack web development, first learning all about the frontend with HTML/CSS/JS/Vue and then the backend with Node.js/Express/MongoDB",
     "floor": 1,
-    "ac": false,
+    "seater": 3,
     "tv": true,
-    "hostel": "5d713995b721c3bb38c1f5d0",
+    "hostel": "5d713a66ec8f2b88b8f830b8",
     "user": "5d7a514b5d2c12c7449be045"
   },
   {
@@ -24,7 +24,7 @@
     "roomNumber": 3,
     "description": "In this course you will learn all about the front end with HTML, CSS and JavaScript. You will master tools like Git and Webpack and also learn C# and ASP.NET with Postgres",
     "floor": 1,
-    "ac": true,
+    "seater": 2,
     "tv": false,
     "hostel": "5d713a66ec8f2b88b8f830b8",
     "user": "5d7a514b5d2c12c7449be046"
@@ -34,7 +34,7 @@
     "roomNumber": 4,
     "description": "In this course you will learn to create beautiful interfaces. It is a mix of design and development to create modern user experiences on both web and mobile",
     "floor": 2,
-    "ac": true,
+    "seater": 2,
     "tv": true,
     "hostel": "5d713a66ec8f2b88b8f830b8",
     "user": "5d7a514b5d2c12c7449be046"
@@ -44,7 +44,7 @@
     "roomNumber": 5,
     "description": "Get started building websites and web apps with HTML/CSS/JavaScript/PHP. We teach you",
     "floor": 2,
-    "ac": false,
+    "seater": 5,
     "tv": false,
     "hostel": "5d725a037b292f5f8ceff787",
     "user": "5c8a1d5b0190b214360dc031"
@@ -54,7 +54,7 @@
     "roomNumber": 6,
     "description": "In this course you will learn Python for data science, machine learning and big data tools",
     "floor": 2,
-    "ac": true,
+    "seater": 4,
     "tv": false,
     "hostel": "5d725a037b292f5f8ceff787",
     "user": "5c8a1d5b0190b214360dc031"
@@ -64,7 +64,7 @@
     "roomNumber": 7,
     "description": "This course will teach you how to build high quality web applications with technologies like React, Node.js, PHP & Laravel",
     "floor": 1,
-    "ac": false,
+    "seater": 3,
     "tv": true,
     "hostel": "5d725a1b7b292f5f8ceff788",
     "user": "5c8a1d5b0190b214360dc032"
@@ -74,7 +74,7 @@
     "roomNumber": 8,
     "description": "This course will teach you everything you need to know about quality assurance",
     "floor": 1,
-    "ac": false,
+    "seater": 2,
     "tv": true,
     "hostel": "5d725a1b7b292f5f8ceff788",
     "user": "5c8a1d5b0190b214360dc032"
@@ -84,7 +84,7 @@
     "roomNumber": 9,
     "description": "Get started building mobile applications for IOS using Swift and other tools",
     "floor": 1,
-    "ac": false,
+    "seater": 3,
     "tv": true,
     "hostel": "5d725a1b7b292f5f8ceff788",
     "user": "5c8a1d5b0190b214360dc032"

@@ -9,9 +9,6 @@ const {
 const router = express.Router({ mergeParams: true });
 
 const Product = require('../models/Product');
-const advancedResults = require('../middleware/advancedResults');
-
-
 
 const { protect, authorize } = require("../middleware/auth");
 

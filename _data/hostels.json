@@ -7,13 +7,11 @@
     "phone": "(111) 111-1111",
     "email": "enroll@cityhostel.com",
     "address": "233 Bay State Rd Boston MA 02215",
-    "mess": true,
-    "typeOfMealServed": ["Breakfast", "Lunch", "Dinner"],
     "hostelType": "maleHostel",
-    "guestEntrance": true,
-    "advanceSecurity": 3000,
-    "wifi": true,
-    "laundary": true
+    "city": "Lahore",
+    "town": "Johar town",
+    "latitude": "72.0",
+    "longitude": "47.0"
   },
   {
     "_id": "5d713a66ec8f2b88b8f830b8",
@@ -23,13 +21,12 @@
     "phone": "(222) 222-2222",
     "email": "enroll@moderntech.com",
     "address": "220 Pawtucket St, Lowell, MA 01854",
-    "mess": true,
-    "typeOfMealServed": ["Breakfast", "Lunch", "Dinner"],
+   
     "hostelType": "maleHostel",
-    "guestEntrance": true,
-    "advanceSecurity": 2500,
-    "wifi": true,
-    "laundary": true
+    "city": "Rawalpindi",
+    "town": "settelite Town",
+    "latitude": "79.0",
+    "longitude": "49.0"
   },
   {
     "_id": "5d725a037b292f5f8ceff787",
@@ -39,13 +36,11 @@
     "phone": "(333) 333-3333",
     "email": "enroll@alihostel.com",
     "address": "85 South Prospect Street Burlington VT 05405",
-    "mess": true,
-    "typeOfMealServed": ["Breakfast", "Lunch", "Dinner"],
     "hostelType": "femaleHostel",
-    "guestEntrance": false,
-    "advanceSecurity": 1000,
-    "wifi": true,
-    "laundary": true
+    "city": "Karachi",
+    "town": "Faisal Town",
+    "latitude": "65.0",
+    "longitude": "34.0"
   },
   {
     "_id": "5d725a1b7b292f5f8ceff788",
@@ -55,12 +50,11 @@
     "phone": "(444) 444-4444",
     "email": "enroll@dubaiboyshostel.com",
     "address": "45 Upper College Rd Kingston RI 02881",
-    "mess": true,
-    "typeOfMealServed": ["Breakfast", "Lunch", "Dinner"],
+   
     "hostelType": "femaleHostel",
-    "guestEntrance": false,
-    "advanceSecurity": 1500,
-    "wifi": true,
-    "laundary": true
+    "city": "Lahore",
+    "town": "Model Town",
+    "latitude": "70.0",
+    "longitude": "56.0"
   }
 ]

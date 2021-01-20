@@ -12,16 +12,17 @@ getProducts
 } = require('../controllers/shops');
 
 const Shop = require('../models/Shop');
-const advancedResults = require('../middleware/advancedResults');
 
 // Include other resource routers
 const productRouter = require('./products');
+const reviewsRouter = require('./shopReview');
 
 
 const router = express.Router();
 
 const { protect, authorize } = require('../middleware/auth');
 router.use('/:shopId/products', productRouter);
+router.use('/:shopId/reviews', reviewsRouter);
 router.route('/:id/order-item').post(protect, orderItems);
 router.route('/search')
 .post( getShops);

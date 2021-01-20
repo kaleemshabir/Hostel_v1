@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-//lkokkkk
+
 const ReviewSchema = new mongoose.Schema({
   text: {
     type: String,
@@ -15,9 +15,9 @@ const ReviewSchema = new mongoose.Schema({
     type: Date,
     default: Date.now,
   },
-  hostel: {
+  shop: {
     type: mongoose.Schema.ObjectId,
-    ref: 'Hostel',
+    ref: 'Shop',
     required: true,
   },
   user: {
@@ -28,24 +28,24 @@ const ReviewSchema = new mongoose.Schema({
 });
 
 // Prevent user from submitting more than one review per hostel
-ReviewSchema.index({ hostel: 1, user: 1 }, { unique: true });
+ReviewSchema.index({ shop: 1, user: 1 }, { unique: true });
 
 // Static method to get avg rating and save
-ReviewSchema.statics.getAverageRating = async function (hostelId) {
+ReviewSchema.statics.getAverageRating = async function (shopId) {
   const obj = await this.aggregate([
     {
-      $match: { hostel: hostelId },
+      $match: { shop: shopId },
     },
     {
       $group: {
-        _id: '$hostel',
+        _id: '$shop',
         averageRating: { $avg: '$rating' },
       },
     },
   ]);
 
   try {
-    await this.model('Hostel').findByIdAndUpdate(hostelId, {
+    await this.model('Shop').findByIdAndUpdate(shopId, {
       averageRating: obj[0].averageRating,
     });
   } catch (err) {
@@ -55,12 +55,12 @@ ReviewSchema.statics.getAverageRating = async function (hostelId) {
 
 // Call getAverageRating after save
 ReviewSchema.post('save', function () {
-  this.constructor.getAverageRating(this.hostel);
+  this.constructor.getAverageRating(this.shop);
 });
 
 // Call getAverageRating before remove
 ReviewSchema.pre('remove', function () {
-  this.constructor.getAverageRating(this.hostel);
+  this.constructor.getAverageRating(this.shop);
 });
 
-module.exports = mongoose.model('Review', ReviewSchema);
+module.exports = mongoose.model('ShopReview', ReviewSchema);
